@@ -1,32 +1,29 @@
-import os
-
-from flask import (Flask, redirect, render_template, request,
-                   send_from_directory, url_for)
+from flask import Flask,render_template, request, jsonify
 
 app = Flask(__name__)
 
-
-@app.route('/')
-def index():
-   print('Request for index page received')
-   return render_template('index.html')
-
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
-@app.route('/hello', methods=['POST'])
-def hello():
-   name = request.form.get('name')
-
-   if name:
-       print('Request for hello page received with name=%s' % name)
-       return render_template('hello.html', name = name)
-   else:
-       print('Request for hello page received with no name or blank name -- redirecting')
-       return redirect(url_for('index'))
+# def get_completion(prompt, model="gpt-3.5-turbo"):
+#     messages = [{"role": "user", "content": prompt}]
+#     response = openai.ChatCompletion.create(
+#         model=model,
+#         messages=messages,
+#         temperature=0, # this is the degree of randomness of the model's output
+#     )
+#     return response.choices[0].message["content"]
 
 
-if __name__ == '__main__':
-   app.run()
+@app.route("/")
+def home():    
+    return render_template("index.html")
+
+
+@app.route("/get")
+def get_bot_response():    
+    userText = request.args.get('msg')  
+    # response = get_completion(userText)  
+    #return str(bot.get_response(userText)) 
+    return 'test'
+
+
+if __name__ == "__main__":
+    app.run()
