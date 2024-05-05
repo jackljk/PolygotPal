@@ -1,6 +1,7 @@
 from openai import AzureOpenAI
 import os
 
+<<<<<<< Updated upstream
 client = AzureOpenAI(
     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
     api_version="2024-02-01",
@@ -9,6 +10,8 @@ client = AzureOpenAI(
 whisper_deployment_id = "PolyWhisper"
 gpt_deployment_id = "PolyGPT"
 
+=======
+>>>>>>> Stashed changes
 def transcribe(audio_file):
     print(audio_file)
     audio_file= open(audio_file, "rb")

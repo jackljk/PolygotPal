@@ -1,15 +1,18 @@
 // Chatbot messaging functionality
 function getBotResponse() {
   var rawText = $("#textInput").val();
+  var ttsButton = "'<button onclick=\"speakText(this)\">Speak</button>'";
   var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
   $("#textInput").val("");
   $("#chatbox").append(userHtml);
+  $("#chatbox").append(ttsButton);
   document
     .getElementById("userInput")
     .scrollIntoView({ block: "start", behavior: "smooth" });
   $.get("/get", { msg: rawText }).done(function (data) {
     var botHtml = '<p class="botText"><span>' + data + "</span></p>";
     $("#chatbox").append(botHtml);
+    $("#chatbox").append(ttsButton);
     document
       .getElementById("userInput")
       .scrollIntoView({ block: "start", behavior: "smooth" });
@@ -112,3 +115,12 @@ function displayTranscription(text) {
   messageArea.value += text;
 }
 
+
+// tts functionality
+function speakText(element) {
+  var text = element.previousElementSibling.textContent; // Gets the text from the <p> tag before the button
+  console.log('Speaking text:', text);
+  var synth = window.speechSynthesis;
+  var utterance = new SpeechSynthesisUtterance(text);
+  synth.speak(utterance);
+}
