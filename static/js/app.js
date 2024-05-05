@@ -118,7 +118,9 @@ function displayTranscription(text) {
 function speakText(element) {
   var text = element.previousElementSibling.textContent; // Gets the text from the <p> tag before the button
   console.log('Speaking text:', text);
-  fetch('/text-to-speech', {
+
+  // Send text to Azure TTS service for synthesis
+  fetch('/azure-text-to-speech', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
