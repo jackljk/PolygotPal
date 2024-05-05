@@ -1,18 +1,16 @@
 // Chatbot messaging functionality
 function getBotResponse() {
   var rawText = $("#textInput").val();
-  var ttsButton = "'<button onclick=\"speakText(this)\">Speak</button>'";
-  var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+  var ttsButton = "<button onclick=\"speakText(this)\" class=\"TTS-button\"><i class=\"fa-solid fa-volume-high\"></i></button>";
+  var userHtml = '<div id="userTextWrapper" ><p class="userText"><span>' + rawText + "</span></p>" + ttsButton + '</div>';
   $("#textInput").val("");
   $("#chatbox").append(userHtml);
-  $("#chatbox").append(ttsButton);
   document
     .getElementById("userInput")
     .scrollIntoView({ block: "start", behavior: "smooth" });
   $.get("/get", { msg: rawText }).done(function (data) {
-    var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+    var botHtml = '<div id="botTextWrapper"><p class="botText"><span>' + data + "</span></p>" + ttsButton + '</div>';
     $("#chatbox").append(botHtml);
-    $("#chatbox").append(ttsButton);
     document
       .getElementById("userInput")
       .scrollIntoView({ block: "start", behavior: "smooth" });

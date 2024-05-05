@@ -60,3 +60,29 @@ html {
   margin-top: 60px;
   border: 1px solid green;
 }
+
+#userTextWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#userTextWrapper .TTS-button {
+  flex-shrink: 0; /* This prevents the button from shrinking if the text is too long */
+  background: none;
+  border: none;
+  margin-top: auto;
+}
+
+#botTextWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#botTextWrapper .TTS-button {
+  flex-shrink: 0; /* This prevents the button from shrinking if the text is too long */
+  background: none;
+  border: none;
+  margin-top: auto;
+}
