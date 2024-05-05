@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 import os
 import requests
 from ai import transcribe, get_completion
+from tts import get_audio
 
 
 app = Flask(__name__)
@@ -30,6 +31,18 @@ def transcribe_audio(filepath):
     print(response)
     return response
 
+
+@app.route('/text-to-speech', methods=['POST'])
+def text_to_speech():
+    data = request.json
+    text = data['text']
+    print(f'Text to speech: {text}')
+    # Assuming you have the TTS API set up and have the necessary client
+    # Here is a pseudo code, adjust according to the specific API you are using
+    # Send the text to the TTS API
+    response = get_audio(text)
+    print(response)
+    return jsonify({'message': 'Text converted to speech.'})
 
 
 @app.route("/")
