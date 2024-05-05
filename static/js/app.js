@@ -120,7 +120,11 @@ function displayTranscription(text) {
 function speakText(element) {
   var text = element.previousElementSibling.textContent; // Gets the text from the <p> tag before the button
   console.log('Speaking text:', text);
-  var synth = window.speechSynthesis;
-  var utterance = new SpeechSynthesisUtterance(text);
-  synth.speak(utterance);
+  fetch('/text-to-speech', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ text: text })
+  });
 }
