@@ -1,7 +1,8 @@
 import azure.cognitiveservices.speech as speechsdk
+import os
 
 # Creates an instance of a speech config with specified subscription key and service region.
-speech_key = "cb602eacab1f47458877ce6a72b6f232"
+speech_key = os.getenv("AZURE_TTS")
 service_region = "eastus"
 
 speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
