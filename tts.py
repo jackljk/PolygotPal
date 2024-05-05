@@ -9,10 +9,14 @@ speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_r
 # Note: the voice setting will not overwrite the voice element in input SSML.
 speech_config.speech_synthesis_voice_name = "ja-JP-NanamiNeural"
 
+# Define the audio file name
+file_name = "outputaudio.wav"
 
-# use the default speaker as audio output.
-speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
+# Create an audio output configuration using the audio file
+file_config = speechsdk.audio.AudioOutputConfig(filename=file_name)
 
+# Create a speech synthesizer with the speech and audio configurations
+speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=file_config)
 
 def get_audio(text):
     result = speech_synthesizer.speak_text_async(text).get()
