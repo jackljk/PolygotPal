@@ -1,4 +1,4 @@
-from flask import Flask,render_template, request, jsonify
+from flask import Flask,render_template, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 import os
 import requests
@@ -40,9 +40,9 @@ def text_to_speech():
     # Assuming you have the TTS API set up and have the necessary client
     # Here is a pseudo code, adjust according to the specific API you are using
     # Send the text to the TTS API
-    response = get_audio(text)
-    print(response)
-    return jsonify({'message': 'Text converted to speech.'})
+    response, url = get_audio(text)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'tts-audio.webm')
+    return jsonify({'message': 'Text to speech generated.', 'url': filepath})
 
 
 @app.route("/")
@@ -58,6 +58,11 @@ def get_bot_response():
     print(response)
     #return str(bot.get_response(userText)) 
     return response
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory('uploads', filename)
 
 
 if __name__ == "__main__":
