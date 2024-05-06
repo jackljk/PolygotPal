@@ -4,7 +4,7 @@ function getBotResponse() {
   var ttsButton =
     '<button onclick="speakText(this)" class="TTS-button"><i class="fa-solid fa-volume-high"></i></button>';
   var userHtml =
-    '<div id="userTextWrapper" ><p class="userText"><span>' +
+    '<div id="userTextWrapper"><p class="userText"><span>' +
     rawText +
     "</span></p>" +
     ttsButton +
@@ -57,6 +57,7 @@ $("#textInput").keypress(function (e) {
     getBotResponse();
   }
 });
+
 
 // Audio recording functionality
 window.onload = function () {

@@ -3,12 +3,30 @@ html {
   height: 100%;
   margin: 0;
   font-family: Arial;
+  background-color: #ababab;
+}
+.boxed {
+  width: 350px;
+  height: 500px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 78%;
+  margin-top: 60px;
 }
 #chatbox {
   margin-left: auto;
   margin-right: auto;
-  width: 40%;
+  width: 50%;
   margin-top: 60px;
+  overflow: scroll;
 }
 #userInput {
   margin-left: auto;
@@ -24,26 +42,27 @@ html {
   font-size: 17px;
 }
 .userText {
-  color: white;
-  font-family: monospace;
-  font-size: 17px;
-  text-align: right;
-  line-height: 30px;
+  float: right;
+  padding: 15px 10px;
+  margin: 10px;
+  border-radius: 20px 20px 1px 20px;
+  background: #cccccc;
+  color: black;
 }
 .userText span {
-  background-color: #808080;
   padding: 10px;
-  border-radius: 2px;
+  border-radius: 2px;  
 }
 .botText {
+  float: left;
+  padding: 15px 20px;
+  margin: 5px;
+  border-radius: 20px 20px 20px 1px;
+  background: #00aaa5;
   color: white;
-  font-family: monospace;
-  font-size: 17px;
-  text-align: left;
-  line-height: 30px;
+  min-width: 40px;
 }
 .botText span {
-  background-color: #4169e1;
   padding: 10px;
   border-radius: 2px;
 }
@@ -53,13 +72,7 @@ html {
   right: 0;
   width: 300px;
 }
-.boxed {
-  margin-left: auto;
-  margin-right: auto;
-  width: 78%;
-  margin-top: 60px;
-  border: 1px solid green;
-}
+
 
 #userTextWrapper {
   display: flex;
