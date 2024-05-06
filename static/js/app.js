@@ -14,18 +14,42 @@ function getBotResponse() {
   document
     .getElementById("userInput")
     .scrollIntoView({ block: "start", behavior: "smooth" });
-  $.get("/get", { msg: rawText }).done(function (data) {
-    var botHtml =
-      '<div id="botTextWrapper"><p class="botText"><span>' +
-      data +
-      "</span></p>" +
-      ttsButton +
-      "</div>";
-    $("#chatbox").append(botHtml);
-    document
-      .getElementById("userInput")
-      .scrollIntoView({ block: "start", behavior: "smooth" });
-  });
+
+  
+  // push the loading indicator to the bottom of the chatbox
+  $("#chatbox").append($("#loadingIndicator"));
+  
+  // Show loading indicator
+  $("#loadingIndicator").show();
+
+  $.get("/get", { msg: rawText })
+    .done(function (data) {
+      var botHtml =
+        '<div id="botTextWrapper"><p class="botText"><span>' +
+        data +
+        "</span></p>" +
+        ttsButton +
+        "</div>";
+      $("#chatbox").append(botHtml);
+      document
+        .getElementById("userInput")
+        .scrollIntoView({ block: "start", behavior: "smooth" });
+    })
+    .fail(function (error) {
+      console.error("Error getting bot response: ", error);
+      var botHtml =
+        '<div id="botTextWrapper"><p class="botText"><span>Sorry, there was an error processing your request. Please try again later.</span></p>' +
+        ttsButton +
+        "</div>";
+      $("#chatbox").append(botHtml);
+      document
+        .getElementById("userInput")
+        .scrollIntoView({ block: "start", behavior: "smooth" });
+    })
+    .always(function () {
+      // Hide loading indicator
+      $("#loadingIndicator").hide();
+    });
 }
 
 $("#textInput").keypress(function (e) {
@@ -68,9 +92,6 @@ async function setupMediaRecorder() {
       handleAudioStop();
       const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType });
       const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = document.getElementById("audioPlayback");
-      audio.src = audioUrl;
-      audioChunks = []; // Clear the array for the next recording
     };
   } catch (error) {
     console.error("Error accessing microphone:", error);
@@ -84,6 +105,8 @@ function startRecording() {
   }
   mediaRecorder.start();
   document.getElementById("recordButton").disabled = true;
+  document.getElementById("recordButton").style.display = "none";
+  document.getElementById("stopButton").style.display = "inline-block";
   document.getElementById("stopButton").disabled = false;
   console.log("Recording started...");
 }
@@ -92,6 +115,8 @@ function stopRecording() {
   if (mediaRecorder && mediaRecorder.state === "recording") {
     mediaRecorder.stop();
     document.getElementById("recordButton").disabled = false;
+    document.getElementById("recordButton").style.display = "inline-block";
+    document.getElementById("stopButton").style.display = "none";
     document.getElementById("stopButton").disabled = true;
     console.log("Recording stopped.");
   }
@@ -133,16 +158,18 @@ function speakText(element) {
     },
     body: JSON.stringify({ text: text }),
   })
-  .then(response => response.json()) // Assuming the server sends back JSON with the audio file URL
-  .then(data => {
-    if (data.url) {
-      var audio = new Audio(data.url);
-      audio.play();
-    } else {
-      console.error("Audio URL not provided.");
-    }
-  })
-  .catch(function (error) {
-    console.error("There was a problem with the fetch operation: " + error.message);
-  });
+    .then((response) => response.json()) // Assuming the server sends back JSON with the audio file URL
+    .then((data) => {
+      if (data.url) {
+        var audio = new Audio(data.url);
+        audio.play();
+      } else {
+        console.error("Audio URL not provided.");
+      }
+    })
+    .catch(function (error) {
+      console.error(
+        "There was a problem with the fetch operation: " + error.message
+      );
+    });
 }

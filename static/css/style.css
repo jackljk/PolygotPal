@@ -86,3 +86,47 @@ html {
   border: none;
   margin-top: auto;
 }
+
+.audio-controls {
+  text-align: center;
+  padding: 20px;
+}
+
+.btn-record, .btn-stop {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-record {
+  background-color: #5cb85c; /* Green */
+}
+
+.btn-record:hover {
+  background-color: #4cae4c;
+}
+
+.btn-stop {
+  background-color: #d9534f; /* Red */
+}
+
+.btn-stop:hover {
+  background-color: #c9302c;
+}
+
+.btn-stop:disabled {
+  background-color: #ccc;
+  cursor: default;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.userText, .botText {
+  animation: fadeIn 0.5s;
+}
