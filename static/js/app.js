@@ -11,15 +11,17 @@ function getBotResponse() {
     "</div>";
   $("#textInput").val("");
   $("#chatbox").append(userHtml);
-  document
-    .getElementById("userInput")
-    .scrollIntoView({ block: "start", behavior: "smooth" });
 
   // push the loading indicator to the bottom of the chatbox
   $("#chatbox").append($("#loadingIndicator"));
 
   // Show loading indicator
   $("#loadingIndicator").show();
+
+  // Scroll to the bottom of the chatbox
+  document
+    .getElementById("userInput")
+    .scrollIntoView({ block: "end", behavior: "smooth" });
 
   $.get("/get", { msg: rawText })
     .done(function (data) {
@@ -32,7 +34,7 @@ function getBotResponse() {
       $("#chatbox").append(botHtml);
       document
         .getElementById("userInput")
-        .scrollIntoView({ block: "start", behavior: "smooth" });
+        .scrollIntoView({ block: "end", behavior: "smooth" });
     })
     .fail(function (error) {
       console.error("Error getting bot response: ", error);
@@ -43,7 +45,7 @@ function getBotResponse() {
       $("#chatbox").append(botHtml);
       document
         .getElementById("userInput")
-        .scrollIntoView({ block: "start", behavior: "smooth" });
+        .scrollIntoView({ block: "end", behavior: "smooth" });
     })
     .always(function () {
       // Hide loading indicator
@@ -56,6 +58,10 @@ $("#textInput").keypress(function (e) {
     e.preventDefault();
     getBotResponse();
   }
+});
+
+$("#submit-btn").click(function () {
+  getBotResponse();
 });
 
 
