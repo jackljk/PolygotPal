@@ -10,7 +10,7 @@ speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_r
 speech_config.speech_synthesis_voice_name = "ja-JP-NanamiNeural"
 
 # Define the audio file name
-file_name = "uploads/outputaudio.wav"
+file_name = "uploads/tts-audio.webm"
 
 # Create an audio output configuration using the audio file
 file_config = speechsdk.audio.AudioOutputConfig(filename=file_name)
@@ -20,12 +20,6 @@ speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, au
 
 def get_audio(text):
     result = speech_synthesizer.speak_text_async(text).get()
-    # Check result
-    if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
-        print("Speech synthesized for text [{}]".format(text))
-    elif result.reason == speechsdk.ResultReason.Canceled:
-        cancellation_details = result.cancellation_details
-        print("Speech synthesis canceled: {}".format(cancellation_details.reason))
-        if cancellation_details.reason == speechsdk.CancellationReason.Error:
-            print("Error details: {}".format(cancellation_details.error_details))
-    return result
+    return result, file_name
+                
+                
