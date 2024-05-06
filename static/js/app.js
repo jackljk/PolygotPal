@@ -15,10 +15,9 @@ function getBotResponse() {
     .getElementById("userInput")
     .scrollIntoView({ block: "start", behavior: "smooth" });
 
-  
   // push the loading indicator to the bottom of the chatbox
   $("#chatbox").append($("#loadingIndicator"));
-  
+
   // Show loading indicator
   $("#loadingIndicator").show();
 
@@ -150,6 +149,16 @@ function speakText(element) {
   var text = element.previousElementSibling.textContent; // Gets the text from the <p> tag before the button
   console.log("Speaking text:", text);
 
+  // add a loading indicator
+  var loadingIndicator = document.createElement("img");
+  loadingIndicator.className = "loading";
+  loadingIndicator.textContent = "Loading...";
+  loadingIndicator.src = "/static/assets/loading/tts-loading.svg";
+  element.parentNode.appendChild(loadingIndicator);
+
+  // hide the TTS button
+  element.style.display = "none";
+
   // Send text to Azure TTS service for synthesis
   fetch("/text-to-speech", {
     method: "POST",
@@ -161,8 +170,26 @@ function speakText(element) {
     .then((response) => response.json()) // Assuming the server sends back JSON with the audio file URL
     .then((data) => {
       if (data.url) {
+        console.log("Audio URL:", data.url);
         var audio = new Audio(data.url);
         audio.play();
+        // Add an event listener for the 'ended' event
+        audio.addEventListener("ended", function () {
+          // Hide the loading indicator when the audio is finished playing
+          loadingIndicator.style.display = "none";
+
+          // Show the TTS button again
+          element.style.display = "";
+          console.log("Audio playback finished.");
+
+          // delete the audio file after playback
+          fetch('/delete/' + data.url, {
+            method: "DELETE",
+          }).then((response) => {
+            console.log("Audio file deleted.");
+          }
+          );
+        });
       } else {
         console.error("Audio URL not provided.");
       }

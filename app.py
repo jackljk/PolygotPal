@@ -41,8 +41,7 @@ def text_to_speech():
     # Here is a pseudo code, adjust according to the specific API you are using
     # Send the text to the TTS API
     response, url = get_audio(text)
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'tts-audio.webm')
-    return jsonify({'message': 'Text to speech generated.', 'url': filepath})
+    return jsonify({'message': 'Text to speech generated.', 'url': url})
 
 
 @app.route("/")
@@ -63,6 +62,12 @@ def get_bot_response():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory('uploads', filename)
+
+@app.route('/delete/uploads/<filename>', methods=['DELETE']) 
+def delete_file(filename):
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    os.remove(file_path)
+    return jsonify({'message': 'File deleted.'})
 
 
 if __name__ == "__main__":
