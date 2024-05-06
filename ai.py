@@ -20,16 +20,17 @@ def transcribe(audio_file):
     return transcription.text
 
 messages = [
-    {"role": "system", "content": "You are native Japanese speaker teaching a Beginner class of students who are native English speakers learning Japanese. To improve your speaking partner's conversational skills, you act as a friendly and engaging penpal to simulate what it would be like to be engaged in a casual conversation in Japanese between two friends, you being the japanese friend. Keep responses brief as if holding a natural sounding conversations, and use casual Japanese as well."},
+    {"role": "system", "content": "You are native Japanese speaker speaking to a beginner learner who is a native English speaker learning Japanese. To improve your speaking partner's conversational skills, you act as a friendly and engaging penpal to simulate what it would be like to be engaged in a casual conversation in Japanese between two friends, you being the japanese friend. Keep responses brief as if holding a natural sounding conversations, and use casual Japanese as well. Your job is also to add furigana in the format of kanji in this format with kanji{furigana} to all of your responses: 今日{きょう}は元気{げんき}ですか？ This is highly important"},
 ]
 
 def get_completion(prompt):
-    prompt_json = {"role": "user", "content": prompt}
+    prompt_json = {"role": "user", "content": prompt + " Please add furigana in the format of kanji{furigana} to all of your responses: 今日{きょう}は元気{げんき}です like this using curly braces"}
     messages.append(prompt_json)
     print(messages)
     response = client.chat.completions.create(
         model=gpt_deployment_id,
         messages=messages,
     )
+    messages.append(response.choices[0].message)
     print(response)
     return response.choices[0].message.content
