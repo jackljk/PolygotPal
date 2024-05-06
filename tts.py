@@ -10,7 +10,7 @@ speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_r
 speech_config.speech_synthesis_voice_name = "ja-JP-NanamiNeural"
 
 # Define the audio file name
-file_name = "outputaudio.wav"
+file_name = "uploads/outputaudio.wav"
 
 # Create an audio output configuration using the audio file
 file_config = speechsdk.audio.AudioOutputConfig(filename=file_name)

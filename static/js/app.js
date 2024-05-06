@@ -120,7 +120,7 @@ function speakText(element) {
   console.log('Speaking text:', text);
 
   // Send text to Azure TTS service for synthesis
-  fetch('/azure-text-to-speech', {
+  fetch('/text-to-speech', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
