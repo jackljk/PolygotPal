@@ -169,7 +169,10 @@ function displayTranscription(text) {
 // tts functionality
 function speakText(element) {
   var text = element.previousElementSibling.textContent; // Gets the text from the <p> tag before the button
-  console.log("Speaking text:", text);
+  var furiganaRegex = /{(.*?)}/g; // Matches furigana enclosed in braces
+  var textWithoutFurigana = text.replace(furiganaRegex, ''); // Removes furigana
+
+  console.log("Speaking text:", textWithoutFurigana);
 
   // add a loading indicator
   var loadingIndicator = document.createElement("img");
@@ -187,7 +190,7 @@ function speakText(element) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ text: text }),
+    body: JSON.stringify({ text: textWithoutFurigana}),
   })
     .then((response) => response.json()) // Assuming the server sends back JSON with the audio file URL
     .then((data) => {
