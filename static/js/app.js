@@ -69,6 +69,21 @@ window.onload = function () {
     .addEventListener("click", stopRecording);
 
   setupMediaRecorder(); // Initialize the media recorder setup
+
+
+  // Message to write on load
+  var ttsButton =
+    '<button onclick="speakText(this)" class="TTS-button"><i class="fa-solid fa-volume-high"></i></button>';
+  var botHtml =
+        '<div id="botTextWrapper"><p class="botText"><span>' +
+        "Hi Welcome to PolyGlot Pal please response with your language of choice and level" +
+        "</span></p>" +
+        ttsButton +
+        "</div>";
+      $("#chatbox").append(botHtml);
+      document
+        .getElementById("userInput")
+        .scrollIntoView({ block: "start", behavior: "smooth" });
 };
 
 let mediaRecorder;

@@ -17,7 +17,7 @@
       <h1 align="center"><b>Polygot Pal</b></h1>
       <p align="center">
         <img
-          src="static/images/icon.png"
+          src="static/images/icon.png"®
           alt="Python-BOT"
           height="210"
           width="220"
@@ -29,31 +29,25 @@
             <div id="loadingIndicator" style="display: none">
               <img src="static/assets/loading/loading.svg" alt="Loading..." />
             </div>
-            <div class="botTextWrapper" style="display: block;">
-              <p class="botText">
-                <span>Hi! I'm your AI-Generative Chatbot</span>
-              </p>
-            </div>
           </div>
           <div id="userInput">
-            <input
-              id="textInput"
-              type="text"
-              name="msg"
-              placeholder="Message"
-            />
-            <button id="recordButton" class="btn-record">
-              <i class="fa-solid fa-microphone-lines"></i>
+            <input type="text" id="textInput" placeholder="Message" name="msg">
+            <button id="recordButton" class="btn-record icon-button">
+              <i class="fa-solid fa-microphone-lines icon-button"></i>
             </button>
             <button
               id="stopButton"
-              class="btn-stop"
+              class="btn-stop icon-button"
               style="display: none"
               disabled
             >
               <i class="fa-regular fa-circle-stop"></i>
             </button>
+            <button class="icon-button">
+              <i class="fa-solid fa-play"></i>
+            </button>
           </div>
+          
         </div>
       </div>
     </div>
