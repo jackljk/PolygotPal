@@ -168,10 +168,10 @@ function displayTranscription(text) {
 
 // tts functionality
 function speakText(element) {
-  var text = element.previousElementSibling.textContent; // Gets the text from the <p> tag before the button
-  var furiganaRegex = /{(.*?)}/g; // Matches furigana enclosed in braces
-  var textWithoutFurigana = text.replace(furiganaRegex, ''); // Removes furigana
-
+  // get content including html tags
+  var text = element.previousElementSibling.textContent; 
+  var textWithoutFurigana = removeFurigana(text);
+  console.log(textWithoutFurigana)
   console.log("Speaking text:", textWithoutFurigana);
 
   // add a loading indicator
@@ -224,4 +224,11 @@ function speakText(element) {
         "There was a problem with the fetch operation: " + error.message
       );
     });
+}
+
+function removeFurigana(text){
+  //remove text within rt tags, and then remove all html tags
+  //input <ruby>最近<rt>さいきん</rt></ruby>、<ruby>忙<rt>いそが</rt></ruby>しい</ruby>ですね。お<ruby>忙<rt>いそが</rt></ruby>しいですか？
+  //returns 最近、忙しいですね。お忙しいですか？
+  return text.replace(/<rt>.*?<\/rt>/g, '').replace(/<.*?>/g, '');
 }
